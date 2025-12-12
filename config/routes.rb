@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
-
-  get "up" => "rails/health#show", as: :rails_health_check
+  devise_for :users, controllers: {
+    sessions: "api/v1/sessions",
+    registrations: "api/v1/registrations"
+  }
+  resources :books
 end
