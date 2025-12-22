@@ -4,31 +4,33 @@ class Api::V1::BooksController < ApplicationController
 
   def index
     @books = Book.all.with_attached_image
-    render json: @books
+    render json: @books.map { |b| serialize_book(b) }
   end
 
   def show
-    render json: @book
+    render json: serialize_book(@book)
   end
 
   def create
     @book = current_user.books.build(book_params)
     if @book.save
-      render json: @book, status: :created
+      render json: serialize_book(@book), status: :created
     else
         render json: { errors: @book.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
+    authorize_book!
     if @book.update(book_params)
-      render json: @book
+      render json: serialize_book(@book)
     else
       render json: { errors: @book.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
+    authorize_book!
     @book.destroy
     head :no_content
   end
@@ -39,6 +41,21 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author, :genre, :condition)
+    params.require(:book).permit(:title, :author, :genre)
+  end
+
+  def serialize_book(book)
+    {
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      genre: book.genre,
+      user_id: book.user_id,
+      image_url: book.image_url
+    }
+  end
+
+  def authorize_book!
+    render json: { error: "Unauthorized" }, status: :unauthorized unless @book.user = current_user
   end
 end
