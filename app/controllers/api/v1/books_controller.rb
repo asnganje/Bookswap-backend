@@ -41,7 +41,7 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author, :genre)
+    params.require(:book).permit(:title, :author, :genre, :image)
   end
 
   def serialize_book(book)
