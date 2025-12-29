@@ -16,7 +16,7 @@ class Api::V1::BooksController < ApplicationController
     if @book.save
       render json: serialize_book(@book), status: :created
     else
-        render json: { errors: @book.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @book.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -56,6 +56,6 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def authorize_book!
-    render json: { error: "Unauthorized" }, status: :unauthorized unless @book.user = current_user
+    render json: { error: "Unauthorized" }, status: :unauthorized unless @book.user == current_user
   end
 end
