@@ -76,6 +76,10 @@ Rails.application.configure do
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
 
+  config.active_storage.service = :amazon
+  Rails.application.routes.default_url_options[:host]="http://localhost:3000"
+  # Rails.application.routes.default_url_options[:host]="https://your-app.onrender.com"
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
