@@ -1,3 +1,15 @@
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    # Frontend origin
+    origins 'http://localhost:5173'  # Replace with your React dev server
+
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: true
+  end
+end
+
 # Be sure to restart your server when you modify this file.
 
 # Avoid CORS issues when API is called from the frontend app.
