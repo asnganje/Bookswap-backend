@@ -19,7 +19,7 @@ class Api::V1::SessionsController < Devise::RegistrationsController
       },
       status: :ok
     else
-      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: "Invalid email or password" }, status: :unprocessable_entity
     end
   end
 
