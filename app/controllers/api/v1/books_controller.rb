@@ -1,5 +1,4 @@
-class Api::V1::BooksController < ApplicationController
-  before_action :authenticate_user!
+class Api::V1::BooksController < Api::V1::BaseController
   before_action :set_book, only: [ :show, :update, :destroy ]
 
   def index
