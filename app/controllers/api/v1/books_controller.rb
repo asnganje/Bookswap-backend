@@ -29,7 +29,6 @@ class Api::V1::BooksController < Api::V1::BaseController
   end
 
   def destroy
-    authorize_book!
     @book.destroy
     head :no_content
   end
