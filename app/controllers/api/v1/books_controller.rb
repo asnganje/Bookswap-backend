@@ -1,5 +1,6 @@
 class Api::V1::BooksController < Api::V1::BaseController
   before_action :set_book, only: [ :show, :update, :destroy ]
+  before_action :authorize_book!, only: [ :update, :destroy ]
 
   def index
     @books = Book.all.with_attached_image
@@ -20,7 +21,6 @@ class Api::V1::BooksController < Api::V1::BaseController
   end
 
   def update
-    authorize_book!
     if @book.update(book_params)
       render json: serialize_book(@book)
     else
@@ -55,6 +55,7 @@ class Api::V1::BooksController < Api::V1::BaseController
   end
 
   def authorize_book!
-    render json: { error: "Unauthorized" }, status: :unauthorized unless @book.user == current_user
+    return if @book.user_id == current_user.id
+    render json: { error: "Unauthorized" }, status: :unauthorized
   end
 end
