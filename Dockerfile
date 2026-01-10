@@ -22,4 +22,4 @@ ENV PORT=8080
 
 EXPOSE 8080
 
-# CMD ["sh", "-c", "bundle exec rails db:migrate && bundle exec puma -C config/puma.rb -b tcp://0.0.0.0:$PORT"]
+CMD ["sh", "-c", "bundle exec rails db:migrate && (bundle exec rake solid_queue:start & bundle exec puma -C config/puma.rb -b tcp://0.0.0.0:$PORT)"]
