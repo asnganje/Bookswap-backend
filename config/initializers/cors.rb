@@ -1,7 +1,7 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # Frontend origin
-    origins 'https://bookswap-frontend-rzsq.onrender.com'
+    origins "https://bookswap-frontend-rzsq.onrender.com" || "http://localhost:5173"
     # origins 'http://localhost:5173'  # Replace with your React dev server
 
     resource '*',
